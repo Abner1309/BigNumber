@@ -21,6 +21,26 @@ Operation* memory_allocation() {
     return operation;
 }
 
+void memory_reallocation(const Operation* operation, const int number) {
+    if (number == 1) {
+        const long int new_capacity = 2 * operation->number1->capacity;
+        char* temp = (char*) realloc(operation->number1->digits, new_capacity * sizeof(char));
+        memory_verification(temp);
+        operation->number1->digits = temp;
+        operation->number1->capacity = new_capacity;
+    }
+    else if (number == 2) {
+        const long int new_capacity = 2 * operation->number2->capacity;
+        char* temp = (char*) realloc(operation->number2->digits, new_capacity * sizeof(char));
+        memory_verification(temp);
+        operation->number2->digits = temp;
+        operation->number2->capacity = new_capacity;
+    }
+    else {
+        print_error();
+    }
+}
+
 void free_resources(Operation* operation) {
     free(operation->number2->digits);
     free(operation->number2);
