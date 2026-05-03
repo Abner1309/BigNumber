@@ -2,12 +2,15 @@
 #define BIGNUMBER_STRUCTURE_H
 
 typedef struct {
-    char* number_a;
-    long int capacity_a;
-    long int elements_a;
-    char* number_b;
-    long int capacity_b;
-    long int elements_b;
+    char* digits;
+    long int capacity;
+    long int elements;
+    char signal;
+} Number;
+
+typedef struct {
+    Number* number1;
+    Number* number2;
     char operator;
 } Operation;
 

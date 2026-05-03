@@ -8,4 +8,6 @@ set(CMAKE_C_STANDARD 11)
 add_executable(BigNumber
         src/structure.c
         include/structure.h
+        src/utilities.c
+        include/utilities.h
 )

@@ -1,35 +1,30 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "structure.h"
+#include "utilities.h"
 
 Operation* memory_allocation() {
-    Operation* new_operation = (Operation*) malloc(sizeof(Operation));
-    if (new_operation == NULL) {
-        fprintf(stderr, "Error: Memory Allocation Error\n");
-        exit(EXIT_FAILURE);
-    }
+    Operation* operation = (Operation*) malloc(sizeof(Operation));
+    memory_verification(operation);
 
-    new_operation->number_a = (char*) malloc(10 * sizeof(char));
-    if (new_operation->number_a == NULL) {
-        fprintf(stderr, "Error: Memory Allocation Error\n");
-        exit(EXIT_FAILURE);
-    }
-    new_operation->capacity_a = 10;
-    new_operation->elements_a = 0;
+    operation->number1 = (Number*) malloc(sizeof(Number));
+    memory_verification(operation->number1);
 
-    new_operation->number_b = (char*) malloc(10 * sizeof(char));
-    if (new_operation->number_b == NULL) {
-        fprintf(stderr, "Error: Memory Allocation Error\n");
-        exit(EXIT_FAILURE);
-    }
-    new_operation->capacity_b = 10;
-    new_operation->elements_b = 0;
+    operation->number1->digits = (char*) malloc(10 * sizeof(char));
+    memory_verification(operation->number1->digits);
 
-    return new_operation;
+    operation->number2 = (Number*) malloc(sizeof(Number));
+    memory_verification(operation->number2);
+
+    operation->number2->digits = (char*) malloc(10 * sizeof(char));
+    memory_verification(operation->number2->digits);
+
+    return operation;
 }
 
 void free_resources(Operation* operation) {
-    free(operation->number_b);
-    free(operation->number_a);
+    free(operation->number2->digits);
+    free(operation->number2);
+    free(operation->number1->digits);
+    free(operation->number1);
     free(operation);
 }
