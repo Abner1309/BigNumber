@@ -16,6 +16,8 @@ typedef struct {
 
 Operation* memory_allocation();
 void memory_reallocation(const Operation* operation, int number);
+void add_element(const Operation* operation, int number, char c);
+void add_operator(Operation* operation, char c);
 void free_resources(Operation* operation);
 
 #endif //BIGNUMBER_STRUCTURE_H
