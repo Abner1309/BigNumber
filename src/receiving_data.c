@@ -61,5 +61,21 @@ Operation* extraction() {
     // RECEIVE OPERATOR
     add_operator(operation, (char) fgetc(arq_input));
 
+    // DETERMINE OPERATOR
+    determine_operator(operation);
+
     return operation;
+}
+
+void determine_operator(Operation* operation) {
+    if (operation->operator == '+') {
+        if (operation->number1->signal == '+' && operation->number2->signal == '-' ||
+            operation->number1->signal == '-' && operation->number2->signal == '+')
+            { operation->operator = '-'; }
+    }
+    else if (operation->operator == '-') {
+        if (operation->number1->signal == '+' && operation->number2->signal == '-' ||
+            operation->number1->signal == '-' && operation->number2->signal == '+')
+        { operation->operator = '+'; }
+    }
 }
