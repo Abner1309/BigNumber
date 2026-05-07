@@ -34,19 +34,23 @@ void print_error() {
 void print_number(const Number* number) {
     int i = 0;
 
-    // PRINT SIGNAL
-    printf("%c", number->signal);
-
     // IGNORE LEADING ZEROS
-    while (number->digits[i] == '0') {
+    while (i < number->capacity && number->digits[i] == '0') {
         i++;
     }
 
-    // PRINT DIGITS
-    const int j = i;
-    while (i < number->elements + j) {
-        printf("%c", number->digits[i]);
-        i++;
+    // IF ALL DIGITS ARE ZEROS
+    if (i == number->capacity) { printf("0"); }
+    // IF THERE IS AT LEAST ONE DIGIT OTHER THAN ZERO
+    else {
+        // PRINT SIGNAL
+        printf("%c", number->signal);
+        // PRINT DIGITS
+        const int j = i;
+        while (i < number->elements + j) {
+            printf("%c", number->digits[i]);
+            i++;
+        }
     }
 
     // PRINT SPACE
