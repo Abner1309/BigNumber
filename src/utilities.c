@@ -32,9 +32,23 @@ void print_error() {
 }
 
 void print_number(const Number* number) {
+    int i = 0;
+
+    // PRINT SIGNAL
     printf("%c", number->signal);
-    for (int i = 0; i < number->elements; i++) {
-        printf("%c", number->digits[i]);
+
+    // IGNORE LEADING ZEROS
+    while (number->digits[i] == '0') {
+        i++;
     }
+
+    // PRINT DIGITS
+    const int j = i;
+    while (i < number->elements + j) {
+        printf("%c", number->digits[i]);
+        i++;
+    }
+
+    // PRINT SPACE
     printf("\n");
 }
