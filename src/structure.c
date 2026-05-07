@@ -93,3 +93,8 @@ void free_resources(Operation* operation) {
     free(operation->number1);
     free(operation);
 }
+
+void free_number(Number* number) {
+    free(number->digits);
+    free(number);
+}
