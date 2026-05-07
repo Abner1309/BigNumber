@@ -12,4 +12,6 @@ add_executable(BigNumber
         include/utilities.h
         src/receiving_data.c
         include/receiving_data.h
+        src/operations.c
+        include/operations.h
 )
