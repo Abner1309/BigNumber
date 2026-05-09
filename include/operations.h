@@ -3,8 +3,8 @@
 #include "structure.h"
 
 Number* operation_sum(const Operation* operation);
-Number* operation_subtraction(Operation* operation);
-Number* operation_multiplication(Operation* operation);
-Number* operation_division(Operation* operation);
+Number* operation_subtraction(const Operation* operation);
+Number* operation_multiplication(const Operation* operation);
+Number* operation_division(const Operation* operation);
 
 #endif //BIGNUMBER_OPERATIONS_H
