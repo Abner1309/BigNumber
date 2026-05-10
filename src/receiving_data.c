@@ -30,6 +30,19 @@ void verify_first_digit(const Operation* operation, const int number, const char
     else { print_error(); }
 }
 
+void determine_operator(Operation* operation) {
+    if (operation->operator == '+') {
+        if (operation->number1->signal == '+' && operation->number2->signal == '-' ||
+            operation->number1->signal == '-' && operation->number2->signal == '+')
+        { operation->operator = '-'; }
+    }
+    else if (operation->operator == '-') {
+        if (operation->number1->signal == '+' && operation->number2->signal == '-' ||
+            operation->number1->signal == '-' && operation->number2->signal == '+')
+        { operation->operator = '+'; }
+    }
+}
+
 Operation* extraction() {
     char input_file_path[512];
 
@@ -65,17 +78,4 @@ Operation* extraction() {
     determine_operator(operation);
 
     return operation;
-}
-
-void determine_operator(Operation* operation) {
-    if (operation->operator == '+') {
-        if (operation->number1->signal == '+' && operation->number2->signal == '-' ||
-            operation->number1->signal == '-' && operation->number2->signal == '+')
-            { operation->operator = '-'; }
-    }
-    else if (operation->operator == '-') {
-        if (operation->number1->signal == '+' && operation->number2->signal == '-' ||
-            operation->number1->signal == '-' && operation->number2->signal == '+')
-        { operation->operator = '+'; }
-    }
 }
