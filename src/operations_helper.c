@@ -21,7 +21,7 @@ Number* memory_allocation_number(const Operation* operation, const long int capa
     return result;
 }
 
-void subtraction_digit_correction(char indicator, const Number* number, int giver, int receiver) {
+void subtraction_loan(char indicator, const Number* number, int giver, int receiver) {
     if (indicator == '+') {
         for (int i = giver; i < receiver; i++) {
             number->digits[i]--;
@@ -39,6 +39,15 @@ void subtraction_digit_correction(char indicator, const Number* number, int give
     }
 }
 
+void subtraction_adjustment_digit(const Number* number) {
+    for (int i = 0, dif = 0; i < number->capacity; i++) {
+        if (number->digits[i] < '0') {
+            dif = ('0' - number->digits[i]) + '0';
+            number->digits[i] = (char) dif;
+        }
+    }
+}
+
 void subtraction_helper(Number* number) {
     int first_number = 0;
     // FIND THE FIRST NUMBER THAT IS NOT ZERO
@@ -51,7 +60,7 @@ void subtraction_helper(Number* number) {
         for (int i = first_number, aux = first_number; i < number->elements; i++) {
             if (number->digits[i] < '0') { aux = i; }
             else if (number->digits[i] > '0') {
-                subtraction_digit_correction('-', number, aux, i);
+                subtraction_loan('-', number, aux, i);
             }
         }
     }
@@ -61,8 +70,11 @@ void subtraction_helper(Number* number) {
         for (int i = first_number, aux = first_number; i < number->elements; i++) {
             if (number->digits[i] > '0') { aux = i; }
             else if (number->digits[i] < '0') {
-                subtraction_digit_correction('+', number, aux, i);
+                subtraction_loan('+', number, aux, i);
             }
         }
     }
+
+    // FINAL ADJUSTMENT
+    subtraction_adjustment_digit(number);
 }
