@@ -6,5 +6,6 @@ Number* operation_sum(const Operation* operation);
 Number* operation_subtraction(const Operation* operation);
 Number* operation_multiplication(const Operation* operation);
 Number* operation_division(const Operation* operation);
+Number* judge(const Operation* operation);
 
 #endif //BIGNUMBER_OPERATIONS_H

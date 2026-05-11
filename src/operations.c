@@ -1,5 +1,7 @@
+#include <stddef.h>
 #include "operations.h"
 #include "operations_helper.h"
+#include "utilities.h"
 
 Number* operation_sum(const Operation* operation) {
     // DETERMINE CAPACITY
@@ -82,5 +84,17 @@ Number* operation_subtraction(const Operation* operation) {
     // SUBTRACTION OPERATION - PART II
     subtraction_helper(result);
 
+    return result;
+}
+
+Number* judge(const Operation* operation) {
+    Number* result = NULL;
+    if (operation->operator == '+') {
+        result = operation_sum(operation);
+    }
+    else if (operation->operator == '-') {
+        result = operation_subtraction(operation);
+    }
+    else { operator_error(); }
     return result;
 }
