@@ -77,5 +77,8 @@ Operation* extraction() {
     // DETERMINE OPERATOR
     determine_operator(operation);
 
+    // FREE RESOURCES
+    fclose(arq_input);
+
     return operation;
 }
