@@ -1,5 +1,6 @@
 #ifndef BIGNUMBER_RETURNING_DATA_H
 #define BIGNUMBER_RETURNING_DATA_H
+#include <stdio.h>
 #include "structure.h"
 
 void save_result(FILE* arq, const Number* number);

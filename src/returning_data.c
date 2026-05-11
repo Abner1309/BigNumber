@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <string.h>
 #include "returning_data.h"
 #include "utilities.h"
