@@ -21,17 +21,17 @@ Number* memory_allocation_number(const Operation* operation, const long int capa
     return result;
 }
 
-void subtraction_loan(char indicator, const Number* number, int giver, int receiver) {
+void subtraction_loan(const char indicator, const Number* number, const int giver, const int receiver) {
     if (indicator == '+') {
         for (int i = giver; i < receiver; i++) {
             number->digits[i]--;
-            number->digits[i + 1] = (char) (number->digits[i] + 10);
+            number->digits[i + 1] = (char) (number->digits[i + 1] + 10);
         }
     }
     else if (indicator == '-') {
         for (int i = giver; i < receiver; i++) {
             number->digits[i]++;
-            number->digits[i + 1] = (char) (number->digits[i] - 10);
+            number->digits[i + 1] = (char) (number->digits[i + 1] - 10);
         }
     }
     else {
