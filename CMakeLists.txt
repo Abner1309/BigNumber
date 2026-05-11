@@ -16,4 +16,6 @@ add_executable(BigNumber
         include/operations.h
         src/operations_helper.c
         include/operations_helper.h
+        src/returning_data.c
+        include/returning_data.h
 )
