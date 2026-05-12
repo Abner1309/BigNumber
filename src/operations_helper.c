@@ -16,6 +16,7 @@ Number* memory_allocation_number(const Operation* operation, const long int capa
     // FILL DIGITS WITH ZEROS
     for (int i = 0; i < capacity; i++) {
         result->digits[i] = '0';
+        result->elements++;
     }
 
     return result;
@@ -77,4 +78,22 @@ void subtraction_helper(Number* number) {
 
     // FINAL ADJUSTMENT
     subtraction_adjustment_digit(number);
+}
+
+void multiplication_division_signal(const Operation* operation, Number* number) {
+    if (operation->number1->signal == '+' && operation->number2->signal == '+') {
+        number->signal = '+';
+    }
+    else if (operation->number1->signal == '+' && operation->number2->signal == '-') {
+        number->signal = '-';
+    }
+    else if (operation->number1->signal == '-' && operation->number2->signal == '+') {
+        number->signal = '-';
+    }
+    else if (operation->number1->signal == '-' && operation->number2->signal == '-') {
+        number->signal = '+';
+    }
+    else {
+        print_error();
+    }
 }
