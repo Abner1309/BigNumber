@@ -21,29 +21,23 @@ Number* operation_sum(const Operation* operation) {
         sum = (operation->number1->digits[a] - '0') + (operation->number2->digits[b] - '0') + (result->digits[c] - '0');
         result->digits[c] = (char) (sum % 10 + '0');
         result->digits[c - 1] = (char) (sum / 10 + '0');
-        result->elements++;
         a--; b--; c--;
     }
     while (a > -1) {
         sum = (operation->number1->digits[a] - '0') + (result->digits[c] - '0');
         result->digits[c] = (char) (sum % 10 + '0');
         result->digits[c - 1] = (char) (sum / 10 + '0');
-        result->elements++;
         a--; c--;
     }
     while (b > -1) {
         sum = (operation->number2->digits[b] - '0') + (result->digits[c] - '0');
         result->digits[c] = (char) (sum % 10);
         result->digits[c - 1] = (char) (sum / 10);
-        result->elements++;
         b--; c--;
     }
 
     // RESULT SIGNAL
     result->signal = operation->number1->signal;
-
-    // LAST DIGIT VERIFICATION
-    if (result->digits[0] != '0') { result->elements++; }
 
     return result;
 }
@@ -65,19 +59,16 @@ Number* operation_subtraction(const Operation* operation) {
     while (a > -1 && b > -1) {
         minus = (operation->number1->digits[a] - '0') - (operation->number2->digits[b] - '0');
         result->digits[c] = (char) (minus + '0');
-        result->elements++;
         a--; b--; c--;
     }
     while (a > -1) {
         minus = (operation->number1->digits[a] - '0');
         result->digits[c] = (char) (minus + '0');
-        result->elements++;
         a--; c--;
     }
     while (b > -1) {
         minus = (operation->number2->digits[b] - '0');
         result->digits[c] = (char) (minus + '0');
-        result->elements++;
         b--; c--;
     }
 
@@ -95,7 +86,23 @@ Number* operation_multiplication(const Operation* operation) {
     Number* result = memory_allocation_number(operation, capacity);
 
     // MULTIPLICATION OPERATION
+    int z = 1;
+    long int a = operation->number1->elements - 1;
+    long int b = operation->number2->elements - 1;
+    long int c = result->capacity - z;
+    int multiplication = 0;
+    while (b > -1) {
+        while (a > -1) {
+            multiplication = (operation->number1->digits[a] - '0') * (operation->number2->digits[b] - '0');
+            result->digits[c] = (char) ((multiplication % 10 + '0') + (result->digits[c] - '0'));
+            result->digits[c - 1] = (char) ((multiplication / 10 + '0') + (result->digits[c - 1] - '0'));
+            a--; c--;
+        }
+        a = operation->number1->elements - 1; b--; z++; c = result->capacity - z;
+    }
 
+    // DETERMINE SIGNAL
+    multiplication_division_signal(operation, result);
 
     return result;
 }
@@ -107,6 +114,9 @@ Number* judge(const Operation* operation) {
     }
     else if (operation->operator == '-') {
         result = operation_subtraction(operation);
+    }
+    else if (operation->operator == '*') {
+        result = operation_multiplication(operation);
     }
     else { operator_error(); }
     return result;
