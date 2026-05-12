@@ -17,8 +17,7 @@ void save_result(FILE* arq, const Number* number) {
         // PRINT SIGNAL
         fprintf(arq, "%c", number->signal);
         // PRINT DIGITS
-        const int j = i;
-        while (i < number->elements + j) {
+        while (i < number->capacity) {
             fprintf(arq, "%c", number->digits[i]);
             i++;
         }
