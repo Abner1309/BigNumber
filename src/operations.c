@@ -107,6 +107,31 @@ Number* operation_multiplication(const Operation* operation) {
     return result;
 }
 
+Number* operation_division(const Operation* operation) {
+    // DETERMINE CAPACITY
+    long int max_capacity = 0;
+    if (operation->number1->elements >= operation->number2->elements) {
+        max_capacity = operation->number1->elements - operation->number2->elements + 1;
+    }
+    else {
+        Number* number = memory_allocation_number(operation, 1);
+        return number;
+    }
+
+    // MEMORY ALLOCATION
+    Number* result = memory_allocation_number(operation, max_capacity);
+
+    // DIVISION OPERATION
+    long int a = 0;
+    long int b = 0;
+    long int c = 0;
+
+    // DETERMINE SIGNAL
+    multiplication_division_signal(operation, result);
+
+    return result;
+}
+
 Number* judge(const Operation* operation) {
     Number* result = NULL;
     if (operation->operator == '+') {
@@ -117,6 +142,9 @@ Number* judge(const Operation* operation) {
     }
     else if (operation->operator == '*') {
         result = operation_multiplication(operation);
+    }
+    else if (operation->operator == '/') {
+        result = operation_division(operation);
     }
     else { operator_error(); }
     return result;
