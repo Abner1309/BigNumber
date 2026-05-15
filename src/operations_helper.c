@@ -81,24 +81,20 @@ void subtraction_helper(Number* number) {
 }
 
 void multiplication_division_signal(const Operation* operation, Number* number) {
-    if (operation->number1->signal == '+' && operation->number2->signal == '+') {
+    if ((operation->number1->signal == '+' && operation->number2->signal == '+') ||
+        (operation->number1->signal == '-' && operation->number2->signal == '-')) {
         number->signal = '+';
     }
-    else if (operation->number1->signal == '+' && operation->number2->signal == '-') {
+    else if ((operation->number1->signal == '+' && operation->number2->signal == '-') ||
+             (operation->number1->signal == '-' && operation->number2->signal == '+')) {
         number->signal = '-';
-    }
-    else if (operation->number1->signal == '-' && operation->number2->signal == '+') {
-        number->signal = '-';
-    }
-    else if (operation->number1->signal == '-' && operation->number2->signal == '-') {
-        number->signal = '+';
     }
     else {
         print_error();
     }
 }
 
-int which_is_bigger(Number* n1, Number* n2) {
+int which_is_bigger(const Number* n1, const Number* n2) {
     if (n1->elements > n2->elements) { return 1; }
     if (n1->elements < n2->elements) { return 2; }
     for (int i = 0; i < n1->elements; i++) {
