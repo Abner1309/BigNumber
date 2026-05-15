@@ -97,3 +97,13 @@ void multiplication_division_signal(const Operation* operation, Number* number) 
         print_error();
     }
 }
+
+int which_is_bigger(Number* n1, Number* n2) {
+    if (n1->elements > n2->elements) { return 1; }
+    if (n1->elements < n2->elements) { return 2; }
+    for (int i = 0; i < n1->elements; i++) {
+        if (n1->digits[i] > n2->digits[i]) { return 1; }
+        if (n1->digits[i] < n2->digits[i]) { return 2; }
+    }
+    return 0;
+}
