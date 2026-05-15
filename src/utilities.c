@@ -56,3 +56,8 @@ void print_number(const Number* number) {
     // PRINT SPACE
     printf("\n");
 }
+
+void division_by_zero_error() {
+    fprintf(stderr, "Error: Division By Zero Is Not Allowed.");
+    exit(EXIT_FAILURE);
+}

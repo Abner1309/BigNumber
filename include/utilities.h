@@ -8,5 +8,6 @@ void number_error();
 void operator_error();
 void print_error();
 void print_number(const Number* number);
+void division_by_zero_error();
 
 #endif //BIGNUMBER_UTILITIES_H
