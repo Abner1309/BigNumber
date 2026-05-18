@@ -2,7 +2,7 @@
 #include "operations_helper.h"
 #include "utilities.h"
 
-Number* memory_allocation_number(const Operation* operation, const long int capacity) {
+Number* memory_allocation_number(const long int capacity) {
     // MEMORY ALLOCATION - RESULT
     Number* result = (Number*) malloc(sizeof(Number));
     memory_verification(result);
@@ -14,12 +14,25 @@ Number* memory_allocation_number(const Operation* operation, const long int capa
     result->elements = 0;
 
     // FILL DIGITS WITH ZEROS
-    for (int i = 0; i < capacity; i++) {
+    for (long int i = 0; i < capacity; i++) {
         result->digits[i] = '0';
         result->elements++;
     }
 
     return result;
+}
+
+Number* copy_number(const Number* number) {
+    Number* new_number = (Number*) malloc(sizeof(Number));
+    memory_verification(new_number);
+    new_number->digits = (char*) malloc(number->elements * sizeof(char));
+    memory_verification(new_number->digits);
+
+    for (long int i = 0; i < number->elements; i++) {
+        new_number->digits[i] = number->digits[i];
+    }
+
+    return new_number;
 }
 
 void subtraction_loan(const char indicator, const Number* number, const int giver, const int receiver) {
