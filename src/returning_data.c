@@ -3,7 +3,7 @@
 #include "utilities.h"
 
 void save_result(FILE* arq, const Number* number) {
-    int i = 0;
+    long int i = 0;
 
     // IGNORE LEADING ZEROS
     while (i < number->capacity && number->digits[i] == '0') {

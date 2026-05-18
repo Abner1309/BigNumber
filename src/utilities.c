@@ -32,7 +32,7 @@ void print_error() {
 }
 
 void print_number(const Number* number) {
-    int i = 0;
+    long int i = 0;
 
     // IGNORE LEADING ZEROS
     while (i < number->capacity && number->digits[i] == '0') {
@@ -46,7 +46,7 @@ void print_number(const Number* number) {
         // PRINT SIGNAL
         printf("%c", number->signal);
         // PRINT DIGITS
-        const int j = i;
+        const long int j = i;
         while (i < number->elements + j) {
             printf("%c", number->digits[i]);
             i++;
