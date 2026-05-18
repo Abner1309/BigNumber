@@ -27,12 +27,40 @@ Number* copy_number(const Number* number) {
     memory_verification(new_number);
     new_number->digits = (char*) malloc(number->elements * sizeof(char));
     memory_verification(new_number->digits);
+    new_number->capacity = number->elements;
+    new_number->elements = 0;
+    new_number->signal = number->signal;
 
     for (long int i = 0; i < number->elements; i++) {
         new_number->digits[i] = number->digits[i];
+        new_number->elements++;
     }
 
     return new_number;
+}
+
+Number* create_division_number(const Number* number, int ten) {
+    long int i = 0;
+    Number* division_number = (Number*) malloc(sizeof(Number));
+    memory_verification(division_number);
+    division_number->digits = (char*) malloc((number->elements + ten) * sizeof(char));
+    memory_verification(division_number->digits);
+    division_number->capacity = number->elements + ten;
+    division_number->elements = 0;
+    division_number->signal = number->signal;
+
+    while (i < number->elements) {
+        division_number->digits[i] = number->digits[i];
+        division_number->elements++;
+        i++;
+    }
+    while (i < number->elements + ten) {
+        division_number->digits[i] = '0';
+        division_number->elements++;
+        i++;
+    }
+
+    return division_number;
 }
 
 void subtraction_loan(const char indicator, const Number* number, const int giver, const int receiver) {
