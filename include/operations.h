@@ -4,6 +4,7 @@
 
 Number* operation_sum(const Operation* operation);
 Number* operation_subtraction(const Operation* operation);
+Number* operation_subtraction2(const Number* n1, const Number* n2);
 Number* operation_multiplication(const Operation* operation);
 Number* operation_division(const Operation* operation);
 Number* judge(const Operation* operation);
