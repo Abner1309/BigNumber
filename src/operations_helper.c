@@ -39,7 +39,7 @@ Number* copy_number(const Number* number) {
     return new_number;
 }
 
-Number* create_division_number(const Number* number, int ten) {
+Number* create_division_number(const Number* number, const long int ten) {
     long int i = 0;
     Number* division_number = (Number*) malloc(sizeof(Number));
     memory_verification(division_number);
@@ -143,4 +143,12 @@ int which_is_bigger(const Number* n1, const Number* n2) {
         if (n1->digits[i] < n2->digits[i]) { return 2; }
     }
     return 0;
+}
+
+long int division_ten_digit(const Number* n1, const Number* n2) {
+    long int difference = n1->elements - n2->elements;
+
+    if (n1->digits[0] <= n2->digits[0]) { difference--; }
+
+    return difference;
 }
