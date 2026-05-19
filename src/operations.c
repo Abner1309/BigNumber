@@ -24,21 +24,21 @@ Number* operation_sum(const Operation* operation) {
     long int c = result->capacity - 1;
     int sum = 0;
     while (a > -1 && b > -1) {
-        sum = (operation->number1->digits[a] - '0') + (operation->number2->digits[b] - '0');
-        result->digits[c] = (char) ((sum % 10 + '0') + (result->digits[c] - '0'));
-        result->digits[c - 1] = (char) ((sum / 10 + '0') + (result->digits[c - 1] - '0'));
+        sum = (operation->number1->digits[a] - '0') + (operation->number2->digits[b] - '0') + (result->digits[c] - '0');
+        result->digits[c] = (char) ((sum % 10) + '0');
+        result->digits[c - 1] = (char) (((sum / 10) + (result->digits[c - 1] - '0')) + '0');
         a--; b--; c--;
     }
     while (a > -1) {
-        sum = (operation->number1->digits[a] - '0');
-        result->digits[c] = (char) ((sum % 10 + '0') + (result->digits[c] - '0'));
-        result->digits[c - 1] = (char) ((sum / 10 + '0') + (result->digits[c - 1] - '0'));
+        sum = (operation->number1->digits[a] - '0') + (result->digits[c] - '0');
+        result->digits[c] = (char) ((sum % 10) + '0');
+        result->digits[c - 1] = (char) (((sum / 10) + (result->digits[c - 1] - '0')) + '0');
         a--; c--;
     }
     while (b > -1) {
-        sum = (operation->number2->digits[b] - '0');
-        result->digits[c] = (char) ((sum % 10 + '0') + (result->digits[c] - '0'));
-        result->digits[c - 1] = (char) ((sum / 10 + '0') + (result->digits[c - 1] - '0'));
+        sum = (operation->number2->digits[b] - '0') + (result->digits[c] - '0');
+        result->digits[c] = (char) ((sum % 10) + '0');
+        result->digits[c - 1] = (char) (((sum / 10) + (result->digits[c - 1] - '0')) + '0');
         b--; c--;
     }
 
@@ -123,9 +123,9 @@ Number* operation_multiplication(const Operation* operation) {
     int multiplication = 0;
     while (b > -1) {
         while (a > -1) {
-            multiplication = (operation->number1->digits[a] - '0') * (operation->number2->digits[b] - '0');
-            result->digits[c] = (char) ((multiplication % 10 + '0') + (result->digits[c] - '0'));
-            result->digits[c - 1] = (char) ((multiplication / 10 + '0') + (result->digits[c - 1] - '0'));
+            multiplication = (operation->number1->digits[a] - '0') * (operation->number2->digits[b] - '0') + (result->digits[c] - '0');
+            result->digits[c] = (char) ((multiplication % 10) + '0');
+            result->digits[c - 1] = (char) ((multiplication / 10 + (result->digits[c - 1] - '0')) + '0');
             a--; c--;
         }
         a = operation->number1->elements - 1; b--; z++; c = result->capacity - z;
