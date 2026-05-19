@@ -83,7 +83,8 @@ Number* operation_subtraction(const Operation* operation) {
     }
     // SUBTRACTION OPERATION - NUMBER TWO IS BIGGER
     else {
-        if (operation->number2->signal == '+') { result->signal = '-'; }
+        if ((operation->number1->signal == '+' && operation->number2->signal == '+') ||
+            (operation->number1->signal == '+' && operation->number2->signal == '-')) { result->signal = '-'; }
         else { result->signal = '+'; }
         while (a > -1 && b > -1) {
             minus = (operation->number2->digits[b] - '0') - (operation->number1->digits[a] - '0');
