@@ -47,7 +47,7 @@ void print_number(const Number* number) {
         printf("%c", number->signal);
         // PRINT DIGITS
         const long int j = i;
-        while (i < number->elements + j) {
+        while (i < number->capacity) {
             printf("%c", number->digits[i]);
             i++;
         }

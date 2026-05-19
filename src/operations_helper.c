@@ -63,62 +63,20 @@ Number* create_division_number(const Number* number, const long int ten) {
     return division_number;
 }
 
-void subtraction_loan(const char indicator, const Number* number, const int giver, const int receiver) {
-    if (indicator == '+') {
-        for (int i = giver; i < receiver; i++) {
-            number->digits[i]--;
-            number->digits[i + 1] = (char) (number->digits[i + 1] + 10);
-        }
+long int subtraction_find_giver(const Number* number, long int receiver) {
+    long int i = receiver - 1;
+    while (i > -1) {
+        if (number->digits[i] > '0') { return i; }
+        i--;
     }
-    else if (indicator == '-') {
-        for (int i = giver; i < receiver; i++) {
-            number->digits[i]++;
-            number->digits[i + 1] = (char) (number->digits[i + 1] - 10);
-        }
-    }
-    else {
-        print_error();
-    }
+    return i;
 }
 
-void subtraction_adjustment_digit(const Number* number) {
-    for (int i = 0, dif = 0; i < number->capacity; i++) {
-        if (number->digits[i] < '0') {
-            dif = ('0' - number->digits[i]) + '0';
-            number->digits[i] = (char) dif;
-        }
+void subtraction_loan(const Number* number, const long int giver, const long int receiver) {
+    for (long int i = giver; i < receiver; i++) {
+        number->digits[i]--;
+        number->digits[i + 1] = (char) (number->digits[i + 1] + 10);
     }
-}
-
-void subtraction_helper(Number* number) {
-    int first_number = 0;
-    // FIND THE FIRST NUMBER THAT IS NOT ZERO
-    while (number->digits[first_number] == '0') { first_number++; }
-    // IF NOT EXISTS ANY DIGIT THAT IS DIFFERENT OF ZERO
-    if (first_number == number->elements) { return; }
-    // IF THE RESULT IS NEGATIVE
-    if (number->digits[first_number] < '0') {
-        number->signal = '-';
-        for (int i = first_number, aux = first_number; i < number->elements; i++) {
-            if (number->digits[i] < '0') { aux = i; }
-            else if (number->digits[i] > '0') {
-                subtraction_loan('-', number, aux, i);
-            }
-        }
-    }
-    // IF THE RESULT IS POSITIVE
-    else {
-        number->signal = '+';
-        for (int i = first_number, aux = first_number; i < number->elements; i++) {
-            if (number->digits[i] > '0') { aux = i; }
-            else if (number->digits[i] < '0') {
-                subtraction_loan('+', number, aux, i);
-            }
-        }
-    }
-
-    // FINAL ADJUSTMENT
-    subtraction_adjustment_digit(number);
 }
 
 void multiplication_division_signal(const Operation* operation, Number* number) {
@@ -138,17 +96,72 @@ void multiplication_division_signal(const Operation* operation, Number* number) 
 int which_is_bigger(const Number* n1, const Number* n2) {
     if (n1->elements > n2->elements) { return 1; }
     if (n1->elements < n2->elements) { return 2; }
-    for (int i = 0; i < n1->elements; i++) {
+    for (long int i = 0; i < n1->capacity; i++) {
         if (n1->digits[i] > n2->digits[i]) { return 1; }
         if (n1->digits[i] < n2->digits[i]) { return 2; }
     }
     return 0;
 }
 
+int this_division_is_possible(const Number* n1, const Number* n2) {
+    long int a = 0;
+    long int b = 0;
+
+    if (n1->elements > n2->elements) { return 1; }
+    if (n1->elements < n2->elements) { return 2; }
+
+    while (n1->digits[a] == '0' && a < n1->capacity) { a++; }
+    while (n2->digits[b] == '0' && a < n2->capacity) { b++; }
+
+    while (a < n1->capacity) {
+        if (n1->digits[a] > n2->digits[b]) { return 1; }
+        if (n1->digits[a] < n2->digits[b]) { return 2; }
+        a++; b++;
+    }
+
+    return 0;
+}
+
 long int division_ten_digit(const Number* n1, const Number* n2) {
     long int difference = n1->elements - n2->elements;
-
     if (n1->digits[0] <= n2->digits[0]) { difference--; }
-
     return difference;
+}
+
+Number* subtraction_for_division(const Number* n1, const Number* n2) {
+    // MEMORY ALLOCATION
+    Number* result = memory_allocation_number(n1->capacity);
+
+    // SUBTRACTION OPERATION
+    long int a = n1->capacity - 1;
+    long int b = n2->capacity - 1;
+    long int c = result->capacity - 1;
+    int minus = 0;
+    result->signal = n1->signal;
+    while (a > -1 && b > -1) {
+        minus = (n1->digits[a] - '0') - (n2->digits[b] - '0');
+        if (minus < 0) {
+            subtraction_loan(n1, subtraction_find_giver(n1, a), a);
+            minus = (n1->digits[a] - '0') - (n2->digits[b] - '0');
+        }
+        result->digits[c] = (char) (minus + '0');
+        a--; b--; c--;
+    }
+    while (a > -1) {
+        minus = (n1->digits[a] - '0');
+        result->digits[c] = (char) (minus + '0');
+        a--; c--;
+    }
+    while (b > -1) {
+        minus = (n2->digits[b] - '0');
+        result->digits[c] = (char) (minus + '0');
+        b--; c--;
+    }
+
+    // ELEMENTS ADJUSTMENT
+    long int i = 0;
+    while (result->digits[i] == '0' && i < result->capacity) { i++; }
+    result->elements = result->capacity - i;
+
+    return result;
 }
