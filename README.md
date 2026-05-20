@@ -36,7 +36,13 @@ This library operates exclusively on integers.
 
 ![Numeric Set](img/set.webp)
 
+## 🚀 Importance:
+Primitive data types in programming languages have a size limitation that prevents them from operating on very large numbers. This is why there is a need to create mechanisms that allow us to overcome this problem and operate on this type of number.
+
 ## 🔐 Digit Limit:
 This library uses "long int" to store the number of elements in a number. Therefore, it is possible to perform operations with numbers that have up to 2,147,483,647 digits.
 
+## 🔨 Valgrind:
+As can be seen in the image below, Valgrind did not detect any errors in the code (all four operations were tested).
 
+![Valgrind Screen](img/valgrind.webp)
