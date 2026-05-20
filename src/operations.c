@@ -1,9 +1,5 @@
-#include <stddef.h>
-#include "operations.h"
-
-#include <stdio.h>
 #include <stdlib.h>
-
+#include "operations.h"
 #include "operations_helper.h"
 #include "utilities.h"
 
@@ -163,7 +159,7 @@ Number* operation_division(const Operation* operation) {
     // DIVISION BY ONE
     if (operation->number2->elements == 1 && operation->number2->digits[0] == '1') {
         Number* number = memory_allocation_number(max_capacity);
-        for (int i = 0; i < max_capacity; i++) {
+        for (long int i = 0; i < max_capacity; i++) {
             number->digits[i] = operation->number1->digits[i];
         }
         return number;
@@ -178,28 +174,15 @@ Number* operation_division(const Operation* operation) {
     // DIVISION OPERATION
     long int digit_value = 0;
     while (this_division_is_possible(division_rest, operation->number2) != 2) {
-        digit_value = division_ten_digit(division_rest, operation->number2);
+        digit_value = division_rest->elements - operation->number2->elements;
         Number* aux = create_division_number(operation->number2, digit_value);
+        if (this_division_is_possible(division_rest, aux) == 2) {
+            free_number(aux);
+            digit_value--;
+            aux = create_division_number(operation->number2, digit_value);
+        }
         while (this_division_is_possible(division_rest, aux) != 2) {
-
-            printf("DIVISION REST: ");
-            print_number(division_rest);
-            printf("Capacity: %ld\n", division_rest->capacity);
-            printf("Elements: %ld\n\n", division_rest->elements);
-
-            printf("AUXILIARY: ");
-            print_number(aux);
-            printf("Capacity: %ld\n", aux->capacity);
-            printf("Elements: %ld\n\n", aux->elements);
-
             Number* temp = subtraction_for_division(division_rest, aux);
-
-            printf("TEMPORARY: ");
-            print_number(temp);
-            printf("Capacity: %ld\n", temp->capacity);
-            printf("Elements: %ld\n", temp->elements);
-            printf("==========================================================================\n");
-
             result->digits[result->capacity - digit_value - 1]++;
             free_number(division_rest);
             division_rest = temp;

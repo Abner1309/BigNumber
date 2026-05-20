@@ -122,12 +122,6 @@ int this_division_is_possible(const Number* n1, const Number* n2) {
     return 0;
 }
 
-long int division_ten_digit(const Number* n1, const Number* n2) {
-    long int difference = n1->elements - n2->elements;
-    if (n1->digits[0] <= n2->digits[0]) { difference--; }
-    return difference;
-}
-
 Number* subtraction_for_division(const Number* n1, const Number* n2) {
     // MEMORY ALLOCATION
     Number* result = memory_allocation_number(n1->capacity);

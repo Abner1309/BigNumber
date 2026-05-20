@@ -10,7 +10,6 @@ void subtraction_loan(const Number* number, long int giver, long int receiver);
 void multiplication_division_signal(const Operation* operation, Number* number);
 int which_is_bigger(const Number* n1, const Number* n2);
 int this_division_is_possible(const Number* n1, const Number* n2);
-long int division_ten_digit(const Number* n1, const Number* n2);
 Number* subtraction_for_division(const Number* n1, const Number* n2);
 
 #endif //BIGNUMBER_OPERATIONS_HELPER_H
